@@ -8,13 +8,14 @@ nist_data = prnist(0:9,1:1000)
 prmemory(64000000);
 clc;
 
-iter = 1;        % Number of performance evaluations
-num_test = 100;  % Number of test objects per class
+iter = 10;        % Number of performance evaluations
+num_test = 10;  % Number of test objects per class
 avarage = 0;
+classify = parzenc;
 
 for i = 1:iter
     % Generate a random training set with 10 objects per class 
-    trainingSize = 0.4;
+    trainingSize = 0.05;
     [train, test] = gendat(nist_data, trainingSize);
     % Calculate trainings prdataset object
 
@@ -25,17 +26,15 @@ for i = 1:iter
     trn_featsel = trn_unselected*mapping;
     % Train SVC classifier
     %w_fisher = fisherc(trn_featsel);
-    t = parzenc;
-    w_svc = t(trn_featsel);
+    
+    classifier = classify(trn_featsel);
     
     %w_fisher_map = mapping*w_fisher;
-    w_svc_map = mapping*w_svc;
+    mapped_classifier = mapping*classifier;
     
     %E1 = nist_eval('my_rep2', w_fisher_map, num_test);
-    e = nist_eval('my_rep1', w_svc_map, num_test)
+    e = nist_eval('my_rep1', mapped_classifier, num_test)
     avarage = avarage + e;
-    %errors(i,1) = E1;   % Fisher
-    %errors(i,1) = E2;   % SVC
 end
 avarage = avarage/iter;
 avarage
