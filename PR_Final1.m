@@ -4,7 +4,7 @@
 clc; clear all; close all;
 
 %Load data
-data = prnist([0:9], [1:5:1000]);
+data = prnist([0:9], [1:1000]);
 prwaitbar off;
 prwarning off
 %convert data set + preprocessing
@@ -31,7 +31,7 @@ non_parametric = {knnc,parzenc};
 advanced = {dtc, bpxnc};
 
 %split data set for training and testing
-trainingSize = 0.95;
+trainingSize = 0.01;
 [train, test] = gendat(dataSetWithFeatures, trainingSize);
 
 %select feature data
